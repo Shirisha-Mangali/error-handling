@@ -1,0 +1,35 @@
+{
+  "name": "prisma-schema-node",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node server.js",
+    "test": "cross-env NODE_ENV=test node server.js",
+    "prod": "cross-env NODE_ENV=production node server.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "nodemon": "^3.1.11",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.1",
+    "pg": "^8.16.3",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "prisma": "^7.1.0"
+  }
+}

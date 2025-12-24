@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: prisma_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hospital_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - "C:/Users/Shirisha Mangali/Desktop/practice/DBs/prisma-schema-node/postgres-data:/var/lib/postgresql/data"
+  app:
+    build: .
+    container_name: prisma_app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/hospital_db?schema=public"
+      PORT: 3000
+    depends_on:
+      - db
+    command: node server.js
+
+volumes:
+  hospital_db_data:
