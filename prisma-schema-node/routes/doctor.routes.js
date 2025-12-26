@@ -1,11 +1,14 @@
 // doctor.routes.js
 import express from "express";
-import passport from "passport"; // <- ADD THIS
-import { createDoctor } from "../controllers/doctor.controller.js";
+import passport  from "passport";
+import { authenticate } from "../middlewares/auth.middleware.js"; // <- ADD THIS
+import { createDoctor,uploadProfileImage} from "../controllers/doctor.controller.js";
 import { validate } from "../middlewares/validate.middleware.js";
 import { createDoctorSchema } from "../schemas/doctor.schema.js";
 import { authorizeRoles } from "../middlewares/role.middleware.js";
 import prisma from "../prismaClient.js";
+import  {uploadDoctorImage} from "../middlewares/upload.middleware.js";
+
 import {
   getDoctorProfile,
   getDoctorPatients
@@ -57,4 +60,10 @@ router.get(
 );
 
 
+router.post("/upload-profile",
+  passport.authenticate("jwt", { session: false }),
+  authorizeRoles("DOCTOR"),
+  uploadDoctorImage.single("profileImage"),
+  uploadProfileImage
+)
 export default router;

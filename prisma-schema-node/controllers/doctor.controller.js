@@ -58,6 +58,7 @@ export const createDoctor=async(req,res,next)=>{
 // };
 
 
+
 export const getDoctorProfile=async(req,res,next)=>{
   try{
   const doctor=await prisma.doctor.findUnique({
@@ -104,4 +105,25 @@ export const getDoctorPatients = async (req, res, next) => {
     status: "success",
     data: doctor.patients,
   });
+};
+
+
+export const uploadProfileImage=async(req,res)=>{
+  //check if line exists 
+  if(!req.file){
+    return res.status(400).json({
+      message:"No file uploaded",
+    })
+  }
+  //build file path
+  const imagePath=`uploads/doctors/${req.file.filename}`;
+  //save path in DB
+  await prisma.doctor.update({
+    where:{userId:req.user.id},
+    data:{profile_image:imagePath},
+  });
+  res.status(200).json({
+    message:"profile img uplload successfully",
+    imagePath,
+  })
 };

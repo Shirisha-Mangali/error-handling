@@ -8,14 +8,15 @@ datasource db {
 }
 
 model Doctor {
-  id           Int           @id @default(autoincrement())
-  name         String
-  departmentId Int
-  userId       Int?          @unique
-  appointments Appointment[]
-  department   department    @relation(fields: [departmentId], references: [id])
-  user         User?         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "doctor_userid_fkey")
-  patients     Patient[]
+  id            Int           @id @default(autoincrement())
+  name          String
+  departmentId  Int
+  userId        Int?          @unique
+  profile_image String?
+  appointments  Appointment[]
+  department    department    @relation(fields: [departmentId], references: [id])
+  user          User?         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "doctor_userid_fkey")
+  patients      Patient[]
 
   @@map("doctor")
   @@schema("hsptl")
