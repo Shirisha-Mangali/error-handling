@@ -2,7 +2,7 @@
 FROM node:20
 
 # Set working directory
-WORKDIR /prisma-schema-node
+WORKDIR /app
 
 
 # Copy package.json and install dependencies

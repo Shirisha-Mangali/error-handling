@@ -1,17 +1,28 @@
+import jwt from "jsonwebtoken";
 import prisma from "../prismaClient.js";
 
 export const authenticate = async (req, res, next) => {
   try {
-    const userId = req.headers["x-user-id"]; // For now, simple header-based auth
-    if (!userId) return res.status(401).json({ error: "Unauthorized" });
+    const authHeader = req.headers.authorization;
 
-    const user = await prisma.user.findUnique({ where: { id: Number(userId) } });
-    if (!user) return res.status(401).json({ error: "User not found" });
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
 
-    req.user = user; // attach user to request for later use
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+    });
+
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
+    }
+
+    req.user = user;
     next();
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(401).json({ error: "Invalid token" });
   }
 };

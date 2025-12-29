@@ -1,6 +1,8 @@
+//routes/admin.routes.js
 import express from "express";
 import passport from "../passport.js";
 import { authorizeRoles } from "../middlewares/role.middleware.js";
+import { authenticate } from "../middlewares/auth.middleware.js";
 import {
   getAllUsers,
   updateUserRole,
@@ -9,6 +11,18 @@ import {
 } from "../controllers/admin.controller.js";
 
 const router = express.Router();
+
+//testing
+router.get(
+  "/",
+  authenticate,
+  authorizeRoles("admin"),
+  (req, res) => {
+    res.json({ message: "Welcome admin" });
+  }
+);
+
+
 
 /**
  * ADMIN → Get all users

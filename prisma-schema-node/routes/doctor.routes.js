@@ -16,6 +16,15 @@ import {
 //import passport from "../passport.js";
 
 const router = express.Router();
+//testing
+router.get(
+  "/",
+  authenticate,
+  (req, res) => {
+    res.json({ message: "Protected doctors route" });
+  }
+);
+
 
 // Protected route: only ADMIN can create a doctor
 router.post(
