@@ -19,9 +19,10 @@ import authRoutes from "./routes/auth.routes.js";
 import patientRoutes from "./routes/patient.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import globalErrorHandler from "./middlewares/error.middleware.js";
+import path from "path";
 const app = express();
 app.use(express.json());
-
+app.use(express.urlencoded({extended:true}));
 app.get("/", (req, res) => res.send("OK"));
 
 
@@ -37,11 +38,50 @@ passport.use(jwtStrategy);
 app.use(passport.initialize());//For every request, Passport is allowed to attach data to req
 //app.use(passport.session());
 
+
+app.use(
+  "/uploads",
+  express.static(path.join(process.cwd(), "uploads"))
+);
+
+
 // Routes
 app.use("/auth", authRoutes);
 app.use("/doctors", doctorRoutes);
 app.use("/patient",patientRoutes);
 app.use("/admin",adminRoutes);
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
+
+//app.listen(3000, () => console.log("Server running on "));
+
+if (process.env.NODE_ENV !== "test") {
+  app.listen(3000, () => {
+    console.log("Server running on port 3000");
+  });
+}
+
+
+
+
+//app.use("/uploads/doctors",express.static("uploads"));
+//without multer
+app.post("/upload-test",(req,res)=>{
+  console.log("req.headers: ",req.headers);
+  console.log("req.body: ",req.body);
+  console.log("req.file:", req.file);
+  console.log("req.files:", req.files);
+
+  res.json({
+    body:req.body,
+    file:req.file,
+    files:req.files,
+  });
+});
+
+
 
 app.use(globalErrorHandler);
 
@@ -66,8 +106,8 @@ app.use('/q',pracQueries);
 // app.use("/labtests", labTestRoutes);
 // app.use("/medicines", medicineRoutes);
 
+export default app;
 
-app.listen(3000, () => console.log("Server running on "));
 
 
 
