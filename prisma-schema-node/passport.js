@@ -18,6 +18,7 @@ passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback",
+    //callbackURL: "https://authapp-umg6.onrender.com/auth/google/callback",
     //This function runs ONLY AFTER: Google verifies the user
 }, async (accessToken, refreshToken, profile, done) => {
     try {
