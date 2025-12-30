@@ -14,9 +14,9 @@ COPY . .
 
 # Generate Prisma client
 #RUN npx prisma generate
-
+ENV NODE_ENV=production
 # Expose port
 EXPOSE 3000
 
 # Start app
-CMD ["node", "run","start"]
+CMD ["node", "server.js"]
