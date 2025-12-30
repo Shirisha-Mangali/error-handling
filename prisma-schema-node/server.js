@@ -29,9 +29,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.get("/", (req, res) => res.send("OK"));
-app.get("/home",(req,res)=>{
-  res.send("home");
-})
+app.get("/home",(req,res)=> res.send("home"));
 
 console.log("ENV:", process.env.NODE_ENV);
 console.log("DB:", process.env.DATABASE_URL);
