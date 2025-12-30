@@ -13,10 +13,10 @@ RUN npm install
 COPY . .
 
 # Generate Prisma client
-RUN npx prisma generate
+#RUN npx prisma generate
 
 # Expose port
 EXPOSE 3000
 
 # Start app
-CMD ["node", "server.js"]
+CMD ["node", "run","start"]
