@@ -2,16 +2,16 @@
 import express from "express";
 import dotenv from "dotenv";
 
-// const env = process.env.NODE_ENV || "development";
-// dotenv.config({
-//  path: `.env.${env}`,
-//   override: true,  
-// })
+const env = process.env.NODE_ENV || "development";
+dotenv.config({
+ path: `.env.${env}`,
+  override: true,  
+})
 
-if (process.env.NODE_ENV !== "production") {
-  const env = process.env.NODE_ENV || "development";
-  dotenv.config({ path: `.env.${env}`, override: true });
-}
+// if (process.env.NODE_ENV !== "production") {
+//   const env = process.env.NODE_ENV || "development";
+//   dotenv.config({ path: `.env.${env}`, override: true });
+// }
 
 import prisma from "./prismaClient.js";
 import practiceQueries from "./controllers/practice.js";
