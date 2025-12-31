@@ -4,10 +4,10 @@ import dotenv from "dotenv";
 import prisma from "../prismaClient.js";
 
 // Load .env first
-dotenv.config({
-  path: `.env.${process.env.NODE_ENV || "development"}`,
-  override: true,
-});
+// dotenv.config({
+//   path: `.env.${process.env.NODE_ENV || "development"}`,
+//   override: true,
+// });
 
 if (!process.env.JWT_SECRET) {
   throw new Error("JWT_SECRET is not defined in your environment variables");
